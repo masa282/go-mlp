@@ -70,7 +70,6 @@ func Tensor3Init(l, m, n int, v float64) [][][]float64 {
 	return ten
 }
 
-//logistic function 0<= y <=1
 func Sigmoid(x float64) float64 {
 	return 1 / (1 + math.Exp(-x))
 }

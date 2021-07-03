@@ -17,14 +17,14 @@ func Set(ni, nh, no, lh int) *Mlp {
 		layHidden:  lh,
 	}
 
-	//重みの初期化
+	//init weight
 	mlp.weiInput = MatrixInit(mlp.nodeInput, mlp.nodeHidden, 0)
 	for n := 0; n < mlp.nodeInput; n++ {
 		for w := 0; w < mlp.nodeHidden; w++ {
 			mlp.weiInput[n][w] = Random(-1, 1)
 		}
 	}
-	if mlp.layHidden > 1 { //隠れ層が２層以上存在するなら作成。
+	if mlp.layHidden > 1 { //if the number of hidden layer is more than 2
 		mlp.weiHidden = Tensor3Init(mlp.layHidden-1, mlp.nodeHidden, mlp.nodeHidden, 0)
 		for i := 0; i < mlp.layHidden-1; i++ {
 			for j := 0; j < mlp.nodeHidden; j++ {
@@ -41,7 +41,7 @@ func Set(ni, nh, no, lh int) *Mlp {
 		}
 	}
 
-	//ノード自身の値
+	//the value of nodes
 	mlp.valInput = VectorInit(mlp.nodeInput, 1)
 	mlp.valHidden = MatrixInit(mlp.layHidden, mlp.nodeHidden, 1)
 	mlp.valOutput = VectorInit(mlp.nodeOutput, 1)
@@ -51,7 +51,7 @@ func Set(ni, nh, no, lh int) *Mlp {
 	return mlp
 }
 
-func (mlp *Mlp) Train() {
+func (mlp *Mlp) Train(patterns [][][]float64) {
 	for i := 0; i < iteration; i++ {
 		var e float64
 		e = 0
